@@ -1,0 +1,45 @@
+import string
+
+def calculate_password_strength(password):
+    length = len(password)
+    has_lower = any(c.islower() for c in password)
+    has_upper = any(c.isupper() for c in password)
+    has_digit = any(c.isdigit() for c in password)
+    has_special = any(c in string.punctuation for c in password)
+    
+    # Calculate score based on different criteria
+    score = 0
+
+    # Length score
+    if length >= 8:
+        score += 1
+    if length >= 12:
+        score += 1
+    if length >= 16:
+        score += 1
+
+    # Character type scores
+    if has_lower:
+        score += 1
+    if has_upper:
+        score += 1
+    if has_digit:
+        score += 1
+    if has_special:
+        score += 1
+
+    # Assign strength level based on the score
+    if score <= 3:
+        strength = "Weak"
+    elif score <= 5:
+        strength = "Moderate"
+    else:
+        strength = "Strong"
+
+    return strength, score
+
+# Example usage
+if __name__ == "__main__":
+    password = input("Enter a password to check its strength: ")
+    strength, score = calculate_password_strength(password)
+    print(f"Password strength: {strength} (Score: {score}/7)")
